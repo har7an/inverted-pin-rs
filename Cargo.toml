@@ -1,0 +1,24 @@
+[package]
+name = "inverted-pin"
+version = "0.1.0"
+authors = ["Diego Barrios Romero <eldruin@gmail.com>"]
+repository = "https://github.com/eldruin/inverted-pin-rs"
+license = "MIT OR Apache-2.0"
+description = "Input/output pin embedded-hal trait implementations with inverted level logic."
+readme = "README.md"
+keywords = ["io", "gpio", "inverted", "pin", "hal"]
+categories = ["embedded", "hardware-support", "no-std"]
+homepage = "https://github.com/eldruin/inverted-pin-rs"
+documentation = "https://docs.rs/inverted-pin"
+edition = "2018"
+
+[dependencies]
+embedded-hal = { version = "0.2.3", features=["unproven"] }
+
+[dev-dependencies]
+linux-embedded-hal = "0.3"
+embedded-hal-mock = "0.8"
+dummy-pin = "0.1"
+
+[profile.release]
+lto = true
