@@ -9,11 +9,14 @@
 
 This provides implementations of the input/output pin [`embedded-hal`] traits with inverted logic.
 
-For example, an `InvertedOutputPin` wraps an `OutputPin` and when setting it low, it will set the
-wrapped `OutputPin` high.
+For example, an `InvertedPin` can wrap an `OutputPin` and when setting it low, it will set the
+wrapped `OutputPin` high. It works similarly for an `InputPin` as well.
 
 This is useful when dealing with pins that use a logic that is inverted with respect to what
 the rest of the system expects.
+
+Since an `InvertedPin` implements the `OutputPin` and `InputPin` traits as well, it can be used
+just like any other `OutputPin` or `InputPin` and serves as a drop-in replacement of the wrapped pin.
 
 ## Usage
 
@@ -21,7 +24,7 @@ This example demonstrates how the same driver can operate with either a normal o
 
 ```rust
 use embedded_hal::digital::v2::OutputPin;
-use inverted_pin::InvertedOutputPin;
+use inverted_pin::InvertedPin;
 use linux_embedded_hal::Pin;
 
 struct Driver<P> {
@@ -53,7 +56,7 @@ fn main() {
     driver_with_real_pin.do_something().unwrap();
     let real_pin = driver_with_real_pin.destroy();
 
-    let inverted_pin = InvertedOutputPin::new(real_pin);
+    let inverted_pin = InvertedPin::new(real_pin);
     let mut driver_with_inverted_pin = Driver::new(inverted_pin);
     driver_with_inverted_pin.do_something().unwrap();
 }

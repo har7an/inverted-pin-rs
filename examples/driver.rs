@@ -1,5 +1,5 @@
 use embedded_hal::digital::v2::OutputPin;
-use inverted_pin::InvertedOutputPin;
+use inverted_pin::InvertedPin;
 use linux_embedded_hal::Pin;
 
 struct Driver<P> {
@@ -31,7 +31,7 @@ fn main() {
     driver_with_real_pin.do_something().unwrap();
     let real_pin = driver_with_real_pin.destroy();
 
-    let inverted_pin = InvertedOutputPin::new(real_pin);
+    let inverted_pin = InvertedPin::new(real_pin);
     let mut driver_with_inverted_pin = Driver::new(inverted_pin);
     driver_with_inverted_pin.do_something().unwrap();
 }

@@ -1,18 +1,18 @@
 use embedded_hal::digital::v2::{InputPin, OutputPin, StatefulOutputPin, ToggleableOutputPin};
 
-/// Inverted output pin
+/// Inverted input/output pin
 ///
-/// Whenever setting this pin to a high or low level, the wrapped pin will be set to the
-/// opposite level.
+/// If wrapping an output pin, whenever setting this pin to a high or low level,
+/// the wrapped pin will be set to the opposite level.
+///
+/// Likewise, if wrapping an input pin, whenever reading this pin it will read
+/// the wrapped input pin and return the opposite level.
 #[derive(Debug, Clone, Copy)]
-pub struct InvertedOutputPin<P> {
+pub struct InvertedPin<P> {
     pin: P,
 }
 
-impl<P, E> InvertedOutputPin<P>
-where
-    P: OutputPin<Error = E>,
-{
+impl<P> InvertedPin<P> {
     /// Create new instance
     pub fn new(pin: P) -> Self {
         Self { pin }
@@ -24,7 +24,7 @@ where
     }
 }
 
-impl<P, E> OutputPin for InvertedOutputPin<P>
+impl<P, E> OutputPin for InvertedPin<P>
 where
     P: OutputPin<Error = E>,
 {
@@ -39,31 +39,7 @@ where
     }
 }
 
-/// Inverted input pin
-///
-/// Whenever reading this pin it will read the wrapped input pin and return
-/// the opposite level.
-#[derive(Debug, Clone, Copy)]
-pub struct InvertedInputPin<P> {
-    pin: P,
-}
-
-impl<P, E> InvertedInputPin<P>
-where
-    P: InputPin<Error = E>,
-{
-    /// Create new instance
-    pub fn new(pin: P) -> Self {
-        Self { pin }
-    }
-
-    /// Destroy instance and return the wrapped pin
-    pub fn destroy(self) -> P {
-        self.pin
-    }
-}
-
-impl<P, E> InputPin for InvertedInputPin<P>
+impl<P, E> InputPin for InvertedPin<P>
 where
     P: InputPin<Error = E>,
 {
@@ -78,7 +54,7 @@ where
     }
 }
 
-impl<P, E> ToggleableOutputPin for InvertedOutputPin<P>
+impl<P, E> ToggleableOutputPin for InvertedPin<P>
 where
     P: ToggleableOutputPin<Error = E>,
 {
@@ -89,7 +65,7 @@ where
     }
 }
 
-impl<P, E> StatefulOutputPin for InvertedOutputPin<P>
+impl<P, E> StatefulOutputPin for InvertedPin<P>
 where
     P: StatefulOutputPin<Error = E>,
 {
