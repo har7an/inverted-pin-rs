@@ -13,10 +13,10 @@ documentation = "https://docs.rs/inverted-pin"
 edition = "2018"
 
 [dependencies]
-embedded-hal = { version = "0.2.7", features=["unproven"] }
+embedded-hal = "1.0.0-alpha.8"
 
 [dev-dependencies]
-linux-embedded-hal = "0.3.2"
+linux-embedded-hal = "0.4.0-alpha.3"
 embedded-hal-mock = "0.8"
 dummy-pin = "0.1.1"
 
